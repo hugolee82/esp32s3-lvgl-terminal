@@ -2,21 +2,22 @@
 #include "lvgl.h"
 #include "ui/src/ui.h"
 #include <WiFi.h>
+#include "data.h"
 
 void WiFi_update()
 {
     static int last_status = -1;
-    if(Set.WiFi_connect_stauts != last_status)
+    if(Set.WiFi_connect_status != last_status)
     {
-        last_status = Set.WiFi_connect_stauts;
+        last_status = Set.WiFi_connect_status;
         if(last_status)
             lv_label_set_text_fmt(ui_LabelWiFIstate, "已连接 %s", WiFi.SSID().c_str());
         else
             lv_label_set_text(ui_LabelWiFIstate, "未连接");
     }
 
-    if(Set.WiFi_connect_stauts && WiFi.status() != WL_CONNECTED)
-        Set.WiFi_connect_stauts = 0;
+    if(Set.WiFi_connect_status && WiFi.status() != WL_CONNECTED)
+        Set.WiFi_connect_status = 0;
 
     if(Set.WiFi_connect_flag)WiFi_connect();
 
@@ -50,6 +51,8 @@ void WiFi_scan()
         }
         Set.WiFi_button_flag = 0;
     }
+    if(!Set.WiFi_connect_status)WiFi_init();
+    strcpy(Set.WiFi_name, WiFi.SSID().c_str());
 }
 
 void WiFi_connect()
@@ -62,11 +65,16 @@ void WiFi_connect()
         if(connect_status == WL_CONNECTED)
         {
             Serial.println("success");
-            Set.WiFi_connect_stauts = 1;
+            Set.WiFi_connect_status = 1;
             break;
         }
-        else Set.WiFi_connect_stauts = 0;
+        else Set.WiFi_connect_status = 0;
         vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+    if(Set.WiFi_connect_status)
+    {
+        if(!Data.time_flag){time_get(), Data.time_flag = 1;}
+        if(!Data.weather_flag)Data.weather_flag = 1;
     }
     lv_obj_add_flag(ui_SpinnerWiFi, LV_OBJ_FLAG_HIDDEN);
     Set.WiFi_connect_flag = 0;
@@ -82,10 +90,15 @@ void WiFi_init()
         if(connect_status == WL_CONNECTED)
         {
             Serial.println("success");
-            Set.WiFi_connect_stauts = 1;
+            Set.WiFi_connect_status = 1;
             break;
         }
-        else Set.WiFi_connect_stauts = 0;
+        else Set.WiFi_connect_status = 0;
         vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+    if(Set.WiFi_connect_status)
+    {
+        if(!Data.time_flag){time_get(), Data.time_flag = 1;}
+        if(!Data.weather_flag)Data.weather_flag = 1;
     }
 }

@@ -3,6 +3,7 @@
 #include <CST816S.h>
 #include "ui/src/ui.h" 
 #include "wifiuser.h"
+#include "data.h"
 
 static const uint16_t screenWidth  = 320;
 static const uint16_t screenHeight = 240;
@@ -78,6 +79,7 @@ void lvgl_setup()
 
 void lvgl_task(void *pt);
 void WiFi_task(void *pt);
+void data_task(void *pt);
 
 void setup()
 {
@@ -87,6 +89,7 @@ void setup()
 
     xTaskCreatePinnedToCore(lvgl_task, "lvgl_task", 1024*15, NULL, 2, NULL, 1);
     xTaskCreatePinnedToCore(WiFi_task, "WiFi_task", 1024*5, NULL, 1, NULL, 0);
+    xTaskCreatePinnedToCore(data_task, "data_task", 1024*5, NULL, 1, NULL, 0);
 }
 
 void loop()
@@ -111,5 +114,14 @@ void WiFi_task(void *pt)
     {
         WiFi_update();
         vTaskDelay(50);
+    }
+}
+
+void data_task(void *pt)
+{
+    while(1)
+    {
+        data_update();
+        vTaskDelay(1000);
     }
 }

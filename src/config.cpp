@@ -7,7 +7,12 @@ cfg_set Set = {
     .WiFi_button_flag = true,
     .WiFi_name = {'\0'},
     .WiFi_password = "" ,
-    .WiFi_connect_stauts = false,
+    .WiFi_connect_status = false,
     .WiFi_connect_flag = false,
     .WiFi_connect_timeout = 10 * 5
+};
+
+cfg_data Data = {
+    .time_flag = false,
+    .weather_flag = false
 };

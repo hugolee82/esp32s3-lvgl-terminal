@@ -124,6 +124,8 @@ void ui_event_ImgButton4(lv_event_t * e);
 extern lv_obj_t * ui_ImgButton4;
 extern lv_obj_t * ui_LabelUpdate;
 extern lv_obj_t * ui_ImgButton1;
+extern lv_obj_t * ui_LabelLastupdata;
+void ui_event_WeatherUpdata(lv_event_t * e);
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Music

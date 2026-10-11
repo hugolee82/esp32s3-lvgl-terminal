@@ -113,6 +113,7 @@ void ui_event_ImgButton4(lv_event_t * e);
 lv_obj_t * ui_ImgButton4;
 lv_obj_t * ui_LabelUpdate;
 lv_obj_t * ui_ImgButton1;
+lv_obj_t * ui_LabelLastupdata;
 // CUSTOM VARIABLES
 
 
@@ -294,7 +295,7 @@ void ui_event_ImgButtonWiFi(lv_event_t * e)
     if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_flag_modify(ui_RollerWiFi, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
         if(lv_obj_is_visible)Set.WiFi_button_flag = 1;
-        else Set.WiFi_connect_stauts = 0;
+        else Set.WiFi_connect_status = 0;
     }
     if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_flag_modify(ui_Buttonconnect, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
@@ -334,6 +335,15 @@ void ui_event_ButtonPass(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_flag_modify(ui_PanelConnect, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
+    }
+}
+
+void ui_event_WeatherUpdata(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        Data.weather_flag = 1;
     }
 }
 
