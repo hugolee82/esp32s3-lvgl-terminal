@@ -23,9 +23,10 @@ void WiFi_update()
 
     if(Set.WiFi_button_flag)
     {
-         WiFi_scan();
-        lv_roller_set_options(ui_RollerWiFi, "正在扫描附近WiFi...\n", 
+        lv_roller_set_options(ui_RollerWiFi, "正在扫描附近WiFi...\n",
         LV_ROLLER_MODE_NORMAL);
+        WiFi_scan();
+        Set.WiFi_button_flag = 0;  // 无条件清零，防止扫不到时死循环重扫
     }
     else
     {
@@ -36,12 +37,18 @@ void WiFi_update()
 
 void WiFi_scan()
 {
-    int n = WiFi.scanNetworks();
-    if (n == 0) 
+    if(WiFi.status() != WL_CONNECTED)
     {
-        lv_roller_set_options(ui_RollerWiFi, "附近无可用WiFi\n", 
-        LV_ROLLER_MODE_NORMAL);
-    } 
+        WiFi.disconnect(false, false);  // 停掉进行中的连接尝试，否则驱动忙，扫描必然失败
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+    Set.WiFi_scan_all = "";  // 先清空，避免重复叠加
+    int n = WiFi.scanNetworks();
+    Serial.printf("scanNetworks = %d\n", n);
+    if (n <= 0)  // 0、-1、-2 都算没扫到（-2 = 驱动忙/模式未启动）
+    {
+        Set.WiFi_scan_all = "附近无可用WiFi\n";
+    }
     else
     {
         for (int i = 0; i < n; ++i)
@@ -49,10 +56,10 @@ void WiFi_scan()
             Set.WiFi_scan_one = WiFi.SSID(i) + "\n";
             Set.WiFi_scan_all += Set.WiFi_scan_one;
         }
-        Set.WiFi_button_flag = 0;
+        strcpy(Set.WiFi_name, WiFi.SSID(0).c_str());  // 取列表第一项，而不是当前已连接的SSID
     }
-    if(!Set.WiFi_connect_status)WiFi_init();
-    strcpy(Set.WiFi_name, WiFi.SSID().c_str());
+    // 注意：这里不能调 WiFi_init()——WiFi.begin() 内部会触发 esp_wifi_connect()，
+    // 让驱动进入“连接中”状态，下一次扫描就会失败。开机自动重连由 main.cpp 的 WiFi_task 负责。
 }
 
 void WiFi_connect()
@@ -82,6 +89,7 @@ void WiFi_connect()
 
 void WiFi_init()
 {
+    WiFi.mode(WIFI_STA);  // 显式设为STA模式，确保扫描可用
     WiFi.begin();
     for(int i = 0; i < Set.WiFi_connect_timeout; ++i)
     {

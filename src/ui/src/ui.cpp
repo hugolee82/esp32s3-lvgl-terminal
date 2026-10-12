@@ -294,7 +294,7 @@ void ui_event_ImgButtonWiFi(lv_event_t * e)
 
     if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_flag_modify(ui_RollerWiFi, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
-        if(lv_obj_is_visible)Set.WiFi_button_flag = 1;
+        if(lv_obj_is_visible(ui_RollerWiFi))Set.WiFi_button_flag = 1;
         else Set.WiFi_connect_status = 0;
     }
     if(event_code == LV_EVENT_VALUE_CHANGED) {
