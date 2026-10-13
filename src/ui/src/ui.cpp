@@ -291,17 +291,16 @@ void ui_event_SliderLight(lv_event_t * e)
 void ui_event_ImgButtonWiFi(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
-
     if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_flag_modify(ui_RollerWiFi, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
-        if(lv_obj_is_visible(ui_RollerWiFi))Set.WiFi_button_flag = 1;
-        else Set.WiFi_connect_status = 0;
-    }
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_flag_modify(ui_Buttonconnect, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
-    }
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_flag_modify(ui_LabelWiFIstate, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
+        if(lv_obj_is_visible(ui_RollerWiFi))Set.WiFi_button_flag = 1;
+        else 
+        {
+            WiFi.disconnect();
+            Set.WiFi_connect_status = 0;
+        }
     }
 }
 
@@ -325,7 +324,7 @@ void ui_event_Keyboard1(lv_event_t * e)
         _ui_flag_modify(ui_PanelConnect, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
         _ui_flag_modify(ui_SpinnerWiFi, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
         Set.WiFi_password = lv_textarea_get_text(ui_Password);
-        Set.WiFi_connect_flag = true;
+        Set.WiFi_connect_flag = 1;
     }
 }
 
