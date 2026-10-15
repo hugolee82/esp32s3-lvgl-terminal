@@ -31,17 +31,18 @@ void my_disp_flush( lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *
 /*Read the touchpad*/
 void my_touchpad_read( lv_indev_drv_t * indev_driver, lv_indev_data_t * data )
 {
-  if (touch.available())
-  {
-    data->state = LV_INDEV_STATE_PR;
-    /*Set the coordinates*/
-    data->point.x = 320-touch.data.y;
-    data->point.y = touch.data.x;
-  }
-  else
-  {
-    data->state = LV_INDEV_STATE_REL;
-  }
+    if (touch.available())
+    {
+        data->state = LV_INDEV_STATE_PR;
+        
+        /*Set the coordinates*/
+        data->point.x = 320-touch.data.y;
+        data->point.y = touch.data.x;
+    }
+    else
+    {
+        data->state = LV_INDEV_STATE_REL;
+    }
 }
 
 void lvgl_setup()
@@ -55,8 +56,8 @@ void lvgl_setup()
     /*Set the touchscreen calibration data,
      the actual data for your display can be acquired using
      the Generic -> Touch_calibrate example from the TFT_eSPI library*/
-
     touch.begin();
+
     lv_disp_draw_buf_init( &draw_buf, buf, NULL, screenWidth * screenHeight / 10 );
 
     /*Initialize the display*/
@@ -87,9 +88,14 @@ void setup()
 
     ui_init();
 
+    // WiFi_init() 放主任务里跑,和参考项目一致:
+    // scanNetworks()/begin() 比较吃栈,放 5KB 的 WiFi_task 里容易爆栈
+    WiFi_init();
+
     xTaskCreatePinnedToCore(lvgl_task, "lvgl_task", 1024*15, NULL, 2, NULL, 1);
-    xTaskCreatePinnedToCore(WiFi_task, "WiFi_task", 1024*5, NULL, 1, NULL, 0);
-    xTaskCreatePinnedToCore(data_task, "data_task", 1024*5, NULL, 1, NULL, 0);
+    xTaskCreatePinnedToCore(WiFi_task, "WiFi_task", 1024*8, NULL, 1, NULL, 0);
+    // data_task 里 weather_get() 要发 HTTPS,握手吃栈,5KB 容易爆,给到 8KB
+    xTaskCreatePinnedToCore(data_task, "data_task", 1024*8, NULL, 1, NULL, 0);
 }
 
 void loop()
@@ -108,8 +114,6 @@ void lvgl_task(void *pt)
 
 void WiFi_task(void *pt)
 {
-    WiFi_init();
-
     while(1)
     {
         WiFi_update();

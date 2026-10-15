@@ -59,16 +59,16 @@ void weather_get()
         data += 
         date+
         " "+doc_2["results"][0]["daily"][i]["text_day"].as<String>()+
-        " 温度:"+doc_2["results"][0]["daily"][i]["low"].as<String>()+
+        " "+doc_2["results"][0]["daily"][i]["low"].as<String>()+
         "~"+doc_2["results"][0]["daily"][i]["high"].as<String>()+
-        " 降水:"+doc_2["results"][0]["daily"][i]["precip"].as<String>()+
+        " "+doc_2["results"][0]["daily"][i]["precip"].as<String>()+
         "\n";
     }
     
     lv_label_set_text_fmt( ui_LabelLocation, "地点:%s", city.c_str());
-    lv_label_set_text_fmt(ui_LabelTemp, "温度:%s度", temp.c_str());
-    lv_label_set_text_fmt( ui_LabelHumidity, "湿度:%s%s", humi.c_str(), "%");
-    lv_label_set_text_fmt( ui_LabelWeathertoday, "天气:%s", text.c_str());
+    lv_label_set_text_fmt(ui_LabelTemp, "%s", temp.c_str());
+    lv_label_set_text_fmt( ui_LabelHumidity, "%s%s", humi.c_str(), "%");
+    lv_label_set_text_fmt( ui_LabelWeathertoday, "%s", text.c_str());
     lv_label_set_text_fmt( ui_LabelLastupdata, "上次更新时间:%s", last_update.c_str());
     lv_roller_set_options( ui_RollerFutureweather, data.c_str(), LV_ROLLER_MODE_NORMAL );
 }
@@ -88,7 +88,7 @@ void data_update()
             
             lv_label_set_text_fmt(ui_Label3,"%02d:%02d:%02d",timeinfo.tm_hour,timeinfo.tm_min,timeinfo.tm_sec);
             lv_label_set_text_fmt(ui_Label4,"%d/%02d/%02d %s",timeinfo.tm_year+1900,timeinfo.tm_mon+1,timeinfo.tm_mday,week[timeinfo.tm_wday]);
-            lv_label_set_text_fmt(ui_LabelCalendartoday,"%d年%02d月%02d日 %s",timeinfo.tm_year+1900,timeinfo.tm_mon+1,timeinfo.tm_mday,week[timeinfo.tm_wday]);
+            lv_label_set_text_fmt(ui_LabelCalendartoday,"%d年%02d月%02d日",timeinfo.tm_year+1900,timeinfo.tm_mon+1,timeinfo.tm_mday,week[timeinfo.tm_wday]);
             if(Data.weather_flag)
             {
                 weather_get();

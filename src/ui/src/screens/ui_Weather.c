@@ -98,11 +98,17 @@ void ui_Weather_screen_init(void)
 
     ui_RollerFutureweather = lv_roller_create(ui_TabFuture);
     lv_roller_set_options(ui_RollerFutureweather, "今天天气\n周一天气\n周二天气\n", LV_ROLLER_MODE_NORMAL);
-    lv_obj_set_width(ui_RollerFutureweather, 199);
-    lv_obj_set_height(ui_RollerFutureweather, 223);
-    lv_obj_set_x(ui_RollerFutureweather, 0);
-    lv_obj_set_y(ui_RollerFutureweather, -3);
+    // roller 不会横向滚动,文字比它宽就直接裁掉,所以宽度要尽量撑满"预报"页(不要写死 199)
+    lv_obj_set_width(ui_RollerFutureweather, 223);
+    lv_obj_set_height(ui_RollerFutureweather, 198);
+    lv_obj_set_x(ui_RollerFutureweather, 1);
+    lv_obj_set_y(ui_RollerFutureweather, -16);
     lv_obj_set_align(ui_RollerFutureweather, LV_ALIGN_CENTER);
+    // 主题默认给 roller 左右各 16px 内边距 + 2px 边框,吃掉不少宽度,这里留 4px 就够了
+    lv_obj_set_style_pad_left(ui_RollerFutureweather, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_pad_right(ui_RollerFutureweather, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
+    // 主题默认行距 20px,一行占 39px,223 高只能看到 5 行多;调成 4 就能看到 9 行
+    lv_obj_set_style_text_line_space(ui_RollerFutureweather, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_RollerFutureweather, lv_color_hex(0xCDCDCD), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_RollerFutureweather, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -138,13 +144,17 @@ void ui_Weather_screen_init(void)
     lv_obj_set_align(ui_ImgButton1, LV_ALIGN_CENTER);
 
     ui_LabelLastupdata = lv_label_create(ui_Weather);
-    lv_obj_set_width(ui_LabelLastupdata, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_LabelLastupdata, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_LabelLastupdata, -61);
-    lv_obj_set_y(ui_LabelLastupdata, 90);
-    lv_obj_set_align(ui_LabelLastupdata, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_LabelLastupdata, "上次更新时间：");
+    // 改成左对齐,固定宽度:文字比标签宽就在框内循环滚动,不会再撑出屏幕
+    lv_obj_set_align(ui_LabelLastupdata, LV_ALIGN_LEFT_MID);
+    lv_obj_set_x(ui_LabelLastupdata, 43);   // 左边缘的 x 坐标(屏幕宽 320,框到 243 为止)
+    lv_obj_set_y(ui_LabelLastupdata, 90);   // 以屏幕垂直中线为基准,和原来同一条线
     lv_obj_set_style_text_font(ui_LabelLastupdata, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    // 注意:long_mode 必须在设尺寸之前调用,否则宽度会被 LONG_WRAP 的默认行为覆盖
+    lv_label_set_long_mode(ui_LabelLastupdata, LV_LABEL_LONG_SCROLL_CIRCULAR);
+    lv_obj_set_width(ui_LabelLastupdata, 200);
+    lv_obj_set_height(ui_LabelLastupdata, 20);
+    lv_obj_set_style_anim_speed(ui_LabelLastupdata, 30, LV_PART_MAIN | LV_STATE_DEFAULT);   // 滚动速度 px/s,想快/慢改这个数
+    lv_label_set_text(ui_LabelLastupdata, "上次更新时间：");
 
     lv_obj_add_event_cb(ui_ImgButton4, ui_event_ImgButton4, LV_EVENT_ALL, NULL);
 
