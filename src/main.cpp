@@ -1,6 +1,7 @@
 #include <lvgl.h>
 #include <TFT_eSPI.h>
 #include <CST816S.h>
+#include "config.h"
 #include "ui/src/ui.h" 
 #include "wifiuser.h"
 #include "data.h"
@@ -81,21 +82,19 @@ void lvgl_setup()
 void lvgl_task(void *pt);
 void WiFi_task(void *pt);
 void data_task(void *pt);
+void serial_task(void *pt);
 
 void setup()
 {
     lvgl_setup();
 
     ui_init();
-
-    // WiFi_init() 放主任务里跑,和参考项目一致:
-    // scanNetworks()/begin() 比较吃栈,放 5KB 的 WiFi_task 里容易爆栈
     WiFi_init();
 
     xTaskCreatePinnedToCore(lvgl_task, "lvgl_task", 1024*15, NULL, 2, NULL, 1);
     xTaskCreatePinnedToCore(WiFi_task, "WiFi_task", 1024*8, NULL, 1, NULL, 0);
-    // data_task 里 weather_get() 要发 HTTPS,握手吃栈,5KB 容易爆,给到 8KB
     xTaskCreatePinnedToCore(data_task, "data_task", 1024*8, NULL, 1, NULL, 0);
+    xTaskCreatePinnedToCore(serial_task, "serial_task", 1024*8, NULL, 1, NULL, 0);
 }
 
 void loop()
@@ -127,5 +126,18 @@ void data_task(void *pt)
     {
         data_update();
         vTaskDelay(1000);
+    }
+}
+
+void serial_task(void *pt)
+{
+    while(1)
+    {
+        if(Serial.available()) 
+        {
+        String RX = Serial.readStringUntil('\n');
+        Uart.rx_data = RX.c_str();
+        lv_textarea_add_text(ui_TextAreaRX, Uart.rx_data);
+        }
     }
 }

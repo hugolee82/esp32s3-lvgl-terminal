@@ -16,3 +16,9 @@ cfg_data Data = {
     .time_flag = false,
     .weather_flag = false
 };
+
+cfg_serial Uart = {
+    .tx_data = "",
+    .rx_data = ""
+
+};

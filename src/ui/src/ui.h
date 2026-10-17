@@ -103,6 +103,14 @@ void ui_Serial_screen_init(void);
 extern lv_obj_t * ui_Serial;
 void ui_event_ImgButton2(lv_event_t * e);
 extern lv_obj_t * ui_ImgButton2;
+void ui_event_TextAreaTX(lv_event_t * e);
+extern lv_obj_t * ui_TextAreaTX;
+extern lv_obj_t * ui_TextAreaRX;
+void ui_event_SerialTX(lv_event_t * e);
+extern lv_obj_t * ui_SerialTX;
+void ui_event_SerialDelete(lv_event_t * e);
+extern lv_obj_t * ui_SerialDelete;
+extern lv_obj_t * ui_Keyboard2;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Weather
@@ -191,6 +199,10 @@ LV_IMG_DECLARE(ui_img_backrelease_png);    // assets/backrelease.png
 LV_IMG_DECLARE(ui_img_backpush_png);    // assets/backpush.png
 LV_IMG_DECLARE(ui_img_wifir_png);    // assets/WIFIr.png
 LV_IMG_DECLARE(ui_img_wifip_png);    // assets/WIFIp.png
+LV_IMG_DECLARE(ui_img_serialtx_png);    // assets/SerialTX.png
+LV_IMG_DECLARE(ui_img_serialtxp_png);    // assets/SerialTXp.png
+LV_IMG_DECLARE(ui_img_serialdeleter_png);    // assets/SerialDeleter.png
+LV_IMG_DECLARE(ui_img_serialdeletep_png);    // assets/SerialDeletep.png
 LV_IMG_DECLARE(ui_img_location_png);    // assets/Location.png
 LV_IMG_DECLARE(ui_img_weather_today_png);    // assets/Weather_today.png
 LV_IMG_DECLARE(ui_img_temp_png);    // assets/Temp.png

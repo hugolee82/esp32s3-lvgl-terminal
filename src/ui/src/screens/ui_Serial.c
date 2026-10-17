@@ -19,6 +19,67 @@ void ui_Serial_screen_init(void)
     lv_obj_set_y(ui_ImgButton2, -94);
     lv_obj_set_align(ui_ImgButton2, LV_ALIGN_CENTER);
 
+    ui_TextAreaTX = lv_textarea_create(ui_Serial);
+    lv_obj_set_width(ui_TextAreaTX, 217);
+    lv_obj_set_height(ui_TextAreaTX, 97);
+    lv_obj_set_x(ui_TextAreaTX, 2);
+    lv_obj_set_y(ui_TextAreaTX, -61);
+    lv_obj_set_align(ui_TextAreaTX, LV_ALIGN_CENTER);
+    lv_textarea_set_placeholder_text(ui_TextAreaTX, "TX...");
+    lv_obj_set_style_text_font(ui_TextAreaTX, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_TextAreaTX, lv_color_hex(0x0F8804), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_TextAreaTX, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+
+    ui_TextAreaRX = lv_textarea_create(ui_Serial);
+    lv_obj_set_width(ui_TextAreaRX, 217);
+    lv_obj_set_height(ui_TextAreaRX, 120);
+    lv_obj_set_x(ui_TextAreaRX, 2);
+    lv_obj_set_y(ui_TextAreaRX, 55);
+    lv_obj_set_align(ui_TextAreaRX, LV_ALIGN_CENTER);
+    lv_textarea_set_placeholder_text(ui_TextAreaRX, "RX...");
+    lv_obj_set_style_text_font(ui_TextAreaRX, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_TextAreaRX, lv_color_hex(0x0F8804), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_TextAreaRX, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+
+    ui_SerialTX = lv_imgbtn_create(ui_Serial);
+    lv_imgbtn_set_src(ui_SerialTX, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_serialtx_png, NULL);
+    lv_imgbtn_set_src(ui_SerialTX, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_serialtxp_png, NULL);
+    lv_obj_set_height(ui_SerialTX, 34);
+    lv_obj_set_width(ui_SerialTX, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_x(ui_SerialTX, 136);
+    lv_obj_set_y(ui_SerialTX, -57);
+    lv_obj_set_align(ui_SerialTX, LV_ALIGN_CENTER);
+
+    ui_SerialDelete = lv_imgbtn_create(ui_Serial);
+    lv_imgbtn_set_src(ui_SerialDelete, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_serialdeleter_png, NULL);
+    lv_imgbtn_set_src(ui_SerialDelete, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_serialdeletep_png, NULL);
+    lv_obj_set_height(ui_SerialDelete, 35);
+    lv_obj_set_width(ui_SerialDelete, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_x(ui_SerialDelete, 136);
+    lv_obj_set_y(ui_SerialDelete, 61);
+    lv_obj_set_align(ui_SerialDelete, LV_ALIGN_CENTER);
+
+    ui_Keyboard2 = lv_keyboard_create(ui_Serial);
+    lv_obj_set_width(ui_Keyboard2, 321);
+    lv_obj_set_height(ui_Keyboard2, 129);
+    lv_obj_set_x(ui_Keyboard2, 0);
+    lv_obj_set_y(ui_Keyboard2, 55);
+    lv_obj_set_align(ui_Keyboard2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_bg_color(ui_Keyboard2, lv_color_hex(0x454545), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Keyboard2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_bg_color(ui_Keyboard2, lv_color_hex(0xC2C2C2), LV_PART_ITEMS | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Keyboard2, 255, LV_PART_ITEMS | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_ImgButton2, ui_event_ImgButton2, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_TextAreaTX, ui_event_TextAreaTX, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_SerialTX, ui_event_SerialTX, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_SerialDelete, ui_event_SerialDelete, LV_EVENT_ALL, NULL);
+    lv_keyboard_set_textarea(ui_Keyboard2, ui_TextAreaTX);
 
 }

@@ -22,7 +22,13 @@ typedef struct {
     bool weather_flag;
 }cfg_data;
 
+typedef struct {
+    const char* tx_data;
+    const char* rx_data;
+}cfg_serial;
+
 extern cfg_set Set;
 extern cfg_data Data;
+extern cfg_serial Uart;
 
 #endif

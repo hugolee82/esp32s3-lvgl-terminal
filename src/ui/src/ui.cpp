@@ -91,6 +91,14 @@ void ui_Serial_screen_init(void);
 lv_obj_t * ui_Serial;
 void ui_event_ImgButton2(lv_event_t * e);
 lv_obj_t * ui_ImgButton2;
+void ui_event_TextAreaTX(lv_event_t * e);
+lv_obj_t * ui_TextAreaTX;
+lv_obj_t * ui_TextAreaRX;
+void ui_event_SerialTX(lv_event_t * e);
+lv_obj_t * ui_SerialTX;
+void ui_event_SerialDelete(lv_event_t * e);
+lv_obj_t * ui_SerialDelete;
+lv_obj_t * ui_Keyboard2;
 // CUSTOM VARIABLES
 
 
@@ -352,6 +360,37 @@ void ui_event_ImgButton2(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+    }
+}
+
+void ui_event_TextAreaTX(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t *target = lv_event_get_target(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
+    }
+    else if(event_code == LV_EVENT_VALUE_CHANGED){
+        Uart.tx_data = lv_textarea_get_text(target);
+    }
+}
+
+void ui_event_SerialTX(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        Serial.println(Uart.tx_data);
+    }
+}
+
+void ui_event_SerialDelete(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        lv_textarea_set_text(ui_TextAreaRX, "");
     }
 }
 
