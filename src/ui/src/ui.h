@@ -141,6 +141,15 @@ void ui_Music_screen_init(void);
 extern lv_obj_t * ui_Music;
 void ui_event_ImgButton5(lv_event_t * e);
 extern lv_obj_t * ui_ImgButton5;
+extern lv_obj_t * ui_Roller1;
+extern lv_obj_t * ui_PanelMusicSet;
+void ui_event_StartMusic(lv_event_t * e);
+extern lv_obj_t * ui_StartMusic;
+void ui_event_ChangeMusic(lv_event_t * e);
+extern lv_obj_t * ui_ChangeMusic;
+void ui_event_SliderVoice(lv_event_t * e);
+extern lv_obj_t * ui_SliderVoice;
+extern lv_obj_t * ui_LabelVoice;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Aidoubao
@@ -209,6 +218,10 @@ LV_IMG_DECLARE(ui_img_temp_png);    // assets/Temp.png
 LV_IMG_DECLARE(ui_img_humidity_png);    // assets/Humidity.png
 LV_IMG_DECLARE(ui_img_updater_png);    // assets/Updater.png
 LV_IMG_DECLARE(ui_img_updatep_png);    // assets/Updatep.png
+LV_IMG_DECLARE(ui_img_music_play_png);    // assets/Music_play.png
+LV_IMG_DECLARE(ui_img_music_stop_png);    // assets/Music_stop.png
+LV_IMG_DECLARE(ui_img_changemusic_png);    // assets/ChangeMusic.png
+LV_IMG_DECLARE(ui_img_changemusicp_png);    // assets/ChangeMusicp.png
 
 // FONTS
 LV_FONT_DECLARE(ui_font_AlimamaDakaiFontsize16Bpp8);

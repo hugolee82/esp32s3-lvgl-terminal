@@ -27,8 +27,19 @@ typedef struct {
     const char* rx_data;
 }cfg_serial;
 
+typedef struct {
+    char song_name[64];
+    String song_list;
+    const char* song_options;
+    bool play_flag;
+    bool start_flag;
+    bool pause_flag;
+    int volume_value;
+}cfg_music;
+
 extern cfg_set Set;
 extern cfg_data Data;
 extern cfg_serial Uart;
+extern cfg_music Music;
 
 #endif

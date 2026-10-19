@@ -130,6 +130,15 @@ void ui_Music_screen_init(void);
 lv_obj_t * ui_Music;
 void ui_event_ImgButton5(lv_event_t * e);
 lv_obj_t * ui_ImgButton5;
+lv_obj_t * ui_Roller1;
+lv_obj_t * ui_PanelMusicSet;
+void ui_event_StartMusic(lv_event_t * e);
+lv_obj_t * ui_StartMusic;
+void ui_event_ChangeMusic(lv_event_t * e);
+lv_obj_t * ui_ChangeMusic;
+void ui_event_SliderVoice(lv_event_t * e);
+lv_obj_t * ui_SliderVoice;
+lv_obj_t * ui_LabelVoice;
 // CUSTOM VARIABLES
 
 
@@ -409,6 +418,38 @@ void ui_event_ImgButton5(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+    }
+}
+
+void ui_event_StartMusic(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+    if(lv_obj_has_state(target, LV_STATE_CHECKED))Music.play_flag = 1;
+    else Music.play_flag = 0;
+    }
+}
+
+void ui_event_ChangeMusic(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        Music.play_flag = 1;
+        Music.start_flag = 1;
+        lv_obj_add_state(ui_StartMusic, LV_STATE_CHECKED);
+        lv_roller_get_selected_str(ui_Roller1, Music.song_name, sizeof(Music.song_name));
+    }
+}
+
+void ui_event_SliderVoice(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+        Music.volume_value = lv_slider_get_value(ui_SliderVoice);
     }
 }
 

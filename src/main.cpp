@@ -5,6 +5,8 @@
 #include "ui/src/ui.h" 
 #include "wifiuser.h"
 #include "data.h"
+#include "sduser.h"
+#include "music.h"
 
 static const uint16_t screenWidth  = 320;
 static const uint16_t screenHeight = 240;
@@ -89,6 +91,8 @@ void setup()
     lvgl_setup();
 
     ui_init();
+    SD_init();
+    music_init();
     WiFi_init();
 
     xTaskCreatePinnedToCore(lvgl_task, "lvgl_task", 1024*15, NULL, 2, NULL, 1);

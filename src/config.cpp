@@ -20,5 +20,14 @@ cfg_data Data = {
 cfg_serial Uart = {
     .tx_data = "",
     .rx_data = ""
+};
 
+cfg_music Music = {
+    .song_name = {'\0'},
+    .song_list = "",
+    .song_options = "",
+    .play_flag = false,
+    .start_flag = false,
+    .pause_flag = false,
+    .volume_value = 16
 };
