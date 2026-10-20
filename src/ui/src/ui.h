@@ -164,6 +164,18 @@ void ui_Steam_screen_init(void);
 extern lv_obj_t * ui_Steam;
 void ui_event_ImgButton7(lv_event_t * e);
 extern lv_obj_t * ui_ImgButton7;
+void ui_event_ImgButton2048(lv_event_t * e);
+extern lv_obj_t * ui_ImgButton2048;
+extern lv_obj_t * ui_Label2048;
+void ui_event_ImgButtonSheep(lv_event_t * e);
+extern lv_obj_t * ui_ImgButtonSheep;
+void ui_event_ImgButtonXiao(lv_event_t * e);
+extern lv_obj_t * ui_ImgButtonXiao;
+void ui_event_ImgButtonPVZ(lv_event_t * e);
+extern lv_obj_t * ui_ImgButtonPVZ;
+extern lv_obj_t * ui_LabelSheep;
+extern lv_obj_t * ui_LabelPVZ;
+extern lv_obj_t * ui_LabelXiao;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Time
@@ -181,6 +193,15 @@ void ui_About_screen_init(void);
 extern lv_obj_t * ui_About;
 void ui_event_ImgButton9(lv_event_t * e);
 extern lv_obj_t * ui_ImgButton9;
+extern lv_obj_t * ui_Image2;
+extern lv_obj_t * ui_LabelGithub;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_Gameson
+void ui_Gameson_screen_init(void);
+extern lv_obj_t * ui_Gameson;
+void ui_event_ImgButtonbacktogame(lv_event_t * e);
+extern lv_obj_t * ui_ImgButtonbacktogame;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -222,6 +243,15 @@ LV_IMG_DECLARE(ui_img_music_play_png);    // assets/Music_play.png
 LV_IMG_DECLARE(ui_img_music_stop_png);    // assets/Music_stop.png
 LV_IMG_DECLARE(ui_img_changemusic_png);    // assets/ChangeMusic.png
 LV_IMG_DECLARE(ui_img_changemusicp_png);    // assets/ChangeMusicp.png
+LV_IMG_DECLARE(ui_img_2048r_png);    // assets/2048r.png
+LV_IMG_DECLARE(ui_img_2048p_png);    // assets/2048p.png
+LV_IMG_DECLARE(ui_img_sheepr_png);    // assets/Sheepr.png
+LV_IMG_DECLARE(ui_img_sheepp_png);    // assets/Sheepp.png
+LV_IMG_DECLARE(ui_img_xiaor_png);    // assets/XiaoR.png
+LV_IMG_DECLARE(ui_img_xiaop_png);    // assets/XiaoP.png
+LV_IMG_DECLARE(ui_img_pvzr_png);    // assets/PVZr.png
+LV_IMG_DECLARE(ui_img_pvzp_png);    // assets/PVZP.png
+LV_IMG_DECLARE(ui_img_about_256190_png);    // assets/About_256190.png
 
 // FONTS
 LV_FONT_DECLARE(ui_font_AlimamaDakaiFontsize16Bpp8);

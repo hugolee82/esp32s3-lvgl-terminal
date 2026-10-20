@@ -19,6 +19,82 @@ void ui_Steam_screen_init(void)
     lv_obj_set_y(ui_ImgButton7, -94);
     lv_obj_set_align(ui_ImgButton7, LV_ALIGN_CENTER);
 
+    ui_ImgButton2048 = lv_imgbtn_create(ui_Steam);
+    lv_imgbtn_set_src(ui_ImgButton2048, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_2048r_png, NULL);
+    lv_imgbtn_set_src(ui_ImgButton2048, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_2048p_png, NULL);
+    lv_obj_set_width(ui_ImgButton2048, 48);
+    lv_obj_set_height(ui_ImgButton2048, 49);
+    lv_obj_set_x(ui_ImgButton2048, -70);
+    lv_obj_set_y(ui_ImgButton2048, -40);
+    lv_obj_set_align(ui_ImgButton2048, LV_ALIGN_CENTER);
+
+    ui_Label2048 = lv_label_create(ui_Steam);
+    lv_obj_set_width(ui_Label2048, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label2048, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label2048, -70);
+    lv_obj_set_y(ui_Label2048, -5);
+    lv_obj_set_align(ui_Label2048, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label2048, "2048");
+    lv_obj_set_style_text_font(ui_Label2048, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_ImgButtonSheep = lv_imgbtn_create(ui_Steam);
+    lv_imgbtn_set_src(ui_ImgButtonSheep, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_sheepr_png, NULL);
+    lv_imgbtn_set_src(ui_ImgButtonSheep, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_sheepp_png, NULL);
+    lv_obj_set_width(ui_ImgButtonSheep, 47);
+    lv_obj_set_height(ui_ImgButtonSheep, 48);
+    lv_obj_set_x(ui_ImgButtonSheep, 57);
+    lv_obj_set_y(ui_ImgButtonSheep, -40);
+    lv_obj_set_align(ui_ImgButtonSheep, LV_ALIGN_CENTER);
+
+    ui_ImgButtonXiao = lv_imgbtn_create(ui_Steam);
+    lv_imgbtn_set_src(ui_ImgButtonXiao, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_xiaor_png, NULL);
+    lv_imgbtn_set_src(ui_ImgButtonXiao, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_xiaop_png, NULL);
+    lv_obj_set_width(ui_ImgButtonXiao, 47);
+    lv_obj_set_height(ui_ImgButtonXiao, 50);
+    lv_obj_set_x(ui_ImgButtonXiao, -70);
+    lv_obj_set_y(ui_ImgButtonXiao, 52);
+    lv_obj_set_align(ui_ImgButtonXiao, LV_ALIGN_CENTER);
+
+    ui_ImgButtonPVZ = lv_imgbtn_create(ui_Steam);
+    lv_imgbtn_set_src(ui_ImgButtonPVZ, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_pvzr_png, NULL);
+    lv_imgbtn_set_src(ui_ImgButtonPVZ, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_pvzp_png, NULL);
+    lv_obj_set_width(ui_ImgButtonPVZ, 44);
+    lv_obj_set_height(ui_ImgButtonPVZ, 47);
+    lv_obj_set_x(ui_ImgButtonPVZ, 57);
+    lv_obj_set_y(ui_ImgButtonPVZ, 52);
+    lv_obj_set_align(ui_ImgButtonPVZ, LV_ALIGN_CENTER);
+
+    ui_LabelSheep = lv_label_create(ui_Steam);
+    lv_obj_set_width(ui_LabelSheep, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LabelSheep, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelSheep, 61);
+    lv_obj_set_y(ui_LabelSheep, -5);
+    lv_obj_set_align(ui_LabelSheep, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelSheep, "羊了个羊");
+    lv_obj_set_style_text_font(ui_LabelSheep, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LabelPVZ = lv_label_create(ui_Steam);
+    lv_obj_set_width(ui_LabelPVZ, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LabelPVZ, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelPVZ, 61);
+    lv_obj_set_y(ui_LabelPVZ, 84);
+    lv_obj_set_align(ui_LabelPVZ, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelPVZ, "植物大战僵尸");
+    lv_obj_set_style_text_font(ui_LabelPVZ, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LabelXiao = lv_label_create(ui_Steam);
+    lv_obj_set_width(ui_LabelXiao, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LabelXiao, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelXiao, -70);
+    lv_obj_set_y(ui_LabelXiao, 84);
+    lv_obj_set_align(ui_LabelXiao, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelXiao, "消消乐");
+    lv_obj_set_style_text_font(ui_LabelXiao, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_ImgButton7, ui_event_ImgButton7, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ImgButton2048, ui_event_ImgButton2048, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ImgButtonSheep, ui_event_ImgButtonSheep, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ImgButtonXiao, ui_event_ImgButtonXiao, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ImgButtonPVZ, ui_event_ImgButtonPVZ, LV_EVENT_ALL, NULL);
 
 }

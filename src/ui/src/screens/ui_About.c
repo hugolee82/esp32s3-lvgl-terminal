@@ -9,6 +9,8 @@ void ui_About_screen_init(void)
 {
     ui_About = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_About, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_About, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_About, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_ImgButton9 = lv_imgbtn_create(ui_About);
     lv_imgbtn_set_src(ui_ImgButton9, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_backrelease_png, NULL);
@@ -18,6 +20,26 @@ void ui_About_screen_init(void)
     lv_obj_set_x(ui_ImgButton9, -133);
     lv_obj_set_y(ui_ImgButton9, -94);
     lv_obj_set_align(ui_ImgButton9, LV_ALIGN_CENTER);
+
+    ui_Image2 = lv_img_create(ui_About);
+    lv_img_set_src(ui_Image2, &ui_img_about_256190_png);
+    lv_obj_set_width(ui_Image2, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Image2, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Image2, 20);
+    lv_obj_set_y(ui_Image2, -12);
+    lv_obj_set_align(ui_Image2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Image2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_Image2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_LabelGithub = lv_label_create(ui_About);
+    lv_obj_set_width(ui_LabelGithub, 300);
+    lv_obj_set_height(ui_LabelGithub, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelGithub, -2);
+    lv_obj_set_y(ui_LabelGithub, 102);
+    lv_obj_set_align(ui_LabelGithub, LV_ALIGN_CENTER);
+    lv_label_set_long_mode(ui_LabelGithub, LV_LABEL_LONG_SCROLL_CIRCULAR);
+    lv_label_set_text(ui_LabelGithub, "Github:https://github.com/hugolee82/esp32s3-lvgl-terminal");
+    lv_obj_set_style_text_font(ui_LabelGithub, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_ImgButton9, ui_event_ImgButton9, LV_EVENT_ALL, NULL);
 

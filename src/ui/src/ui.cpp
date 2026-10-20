@@ -155,6 +155,18 @@ void ui_Steam_screen_init(void);
 lv_obj_t * ui_Steam;
 void ui_event_ImgButton7(lv_event_t * e);
 lv_obj_t * ui_ImgButton7;
+void ui_event_ImgButton2048(lv_event_t * e);
+lv_obj_t * ui_ImgButton2048;
+lv_obj_t * ui_Label2048;
+void ui_event_ImgButtonSheep(lv_event_t * e);
+lv_obj_t * ui_ImgButtonSheep;
+void ui_event_ImgButtonXiao(lv_event_t * e);
+lv_obj_t * ui_ImgButtonXiao;
+void ui_event_ImgButtonPVZ(lv_event_t * e);
+lv_obj_t * ui_ImgButtonPVZ;
+lv_obj_t * ui_LabelSheep;
+lv_obj_t * ui_LabelPVZ;
+lv_obj_t * ui_LabelXiao;
 // CUSTOM VARIABLES
 
 
@@ -174,6 +186,15 @@ void ui_About_screen_init(void);
 lv_obj_t * ui_About;
 void ui_event_ImgButton9(lv_event_t * e);
 lv_obj_t * ui_ImgButton9;
+lv_obj_t * ui_Image2;
+lv_obj_t * ui_LabelGithub;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_Gameson
+void ui_Gameson_screen_init(void);
+void ui_event_ImgButtonbacktogame(lv_event_t * e);
+lv_obj_t * ui_Gameson;
+lv_obj_t * ui_ImgButtonbacktogame;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -471,6 +492,94 @@ void ui_event_ImgButton7(lv_event_t * e)
     }
 }
 
+void ui_event_ImgButton2048(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Gameson, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Gameson_screen_init);
+        _ui_screen_delete(&ui_Steam);
+        lv_obj_clean(ui_Gameson);
+        game2048_update(ui_Gameson);
+
+        ui_ImgButtonbacktogame = lv_imgbtn_create(ui_Gameson);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_backrelease_png, NULL);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_backpush_png, NULL);
+        lv_obj_set_height(ui_ImgButtonbacktogame, 32);
+        lv_obj_set_width(ui_ImgButtonbacktogame, LV_SIZE_CONTENT);   /// 32
+        lv_obj_set_x(ui_ImgButtonbacktogame, -133);
+        lv_obj_set_y(ui_ImgButtonbacktogame, -94);
+        lv_obj_set_align(ui_ImgButtonbacktogame, LV_ALIGN_CENTER);
+        lv_obj_add_event_cb(ui_ImgButtonbacktogame, ui_event_ImgButtonbacktogame, LV_EVENT_ALL, NULL);
+    }
+}
+
+void ui_event_ImgButtonSheep(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Gameson, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Gameson_screen_init);
+        _ui_screen_delete(&ui_Steam);
+        lv_obj_clean(ui_Gameson);
+        yang_update(ui_Gameson);
+
+        ui_ImgButtonbacktogame = lv_imgbtn_create(ui_Gameson);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_backrelease_png, NULL);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_backpush_png, NULL);
+        lv_obj_set_height(ui_ImgButtonbacktogame, 32);
+        lv_obj_set_width(ui_ImgButtonbacktogame, LV_SIZE_CONTENT);   /// 32
+        lv_obj_set_x(ui_ImgButtonbacktogame, -133);
+        lv_obj_set_y(ui_ImgButtonbacktogame, -94);
+        lv_obj_set_align(ui_ImgButtonbacktogame, LV_ALIGN_CENTER);
+        lv_obj_add_event_cb(ui_ImgButtonbacktogame, ui_event_ImgButtonbacktogame, LV_EVENT_ALL, NULL);
+    }
+}
+
+void ui_event_ImgButtonXiao(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Gameson, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Gameson_screen_init);
+        _ui_screen_delete(&ui_Steam);
+        lv_obj_clean(ui_Gameson);
+        xiaoxiaole_update(ui_Gameson);
+
+        ui_ImgButtonbacktogame = lv_imgbtn_create(ui_Gameson);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_backrelease_png, NULL);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_backpush_png, NULL);
+        lv_obj_set_height(ui_ImgButtonbacktogame, 32);
+        lv_obj_set_width(ui_ImgButtonbacktogame, LV_SIZE_CONTENT);   /// 32
+        lv_obj_set_x(ui_ImgButtonbacktogame, -133);
+        lv_obj_set_y(ui_ImgButtonbacktogame, -94);
+        lv_obj_set_align(ui_ImgButtonbacktogame, LV_ALIGN_CENTER);
+        lv_obj_add_event_cb(ui_ImgButtonbacktogame, ui_event_ImgButtonbacktogame, LV_EVENT_ALL, NULL);
+    }
+}
+
+void ui_event_ImgButtonPVZ(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Gameson, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Gameson_screen_init);
+        _ui_screen_delete(&ui_Steam);
+        lv_obj_clean(ui_Gameson);
+        pvz_update(ui_Gameson);
+
+        ui_ImgButtonbacktogame = lv_imgbtn_create(ui_Gameson);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_backrelease_png, NULL);
+        lv_imgbtn_set_src(ui_ImgButtonbacktogame, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_backpush_png, NULL);
+        lv_obj_set_height(ui_ImgButtonbacktogame, 32);
+        lv_obj_set_width(ui_ImgButtonbacktogame, LV_SIZE_CONTENT);   /// 32
+        lv_obj_set_x(ui_ImgButtonbacktogame, -133);
+        lv_obj_set_y(ui_ImgButtonbacktogame, -94);
+        lv_obj_set_align(ui_ImgButtonbacktogame, LV_ALIGN_CENTER);
+        lv_obj_add_event_cb(ui_ImgButtonbacktogame, ui_event_ImgButtonbacktogame, LV_EVENT_ALL, NULL);
+    }
+}
+
 void ui_event_ImgButton8(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -486,6 +595,16 @@ void ui_event_ImgButton9(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+    }
+}
+
+void ui_event_ImgButtonbacktogame(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Steam, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Steam_screen_init);
+        _ui_screen_delete(&ui_Gameson);
     }
 }
 
@@ -506,6 +625,7 @@ void ui_init(void)
     ui_Steam_screen_init();
     ui_Time_screen_init();
     ui_About_screen_init();
+    ui_Gameson_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Main);
 }

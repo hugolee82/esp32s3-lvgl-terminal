@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <string.h>
 #include <WiFi.h>
+#include <lv_games.h>
 
 typedef struct {
     int screen_light;
