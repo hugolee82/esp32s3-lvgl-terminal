@@ -499,6 +499,8 @@ void ui_event_SwitchSpeak(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_checked_set_text_value(ui_LabelSpeak, target, "ON", "OFF");
+        if(lv_obj_has_state(target, LV_STATE_CHECKED))Xiaozhi.ask_flag = 1;
+        else Xiaozhi.ask_flag = 0;
     }
 }
 

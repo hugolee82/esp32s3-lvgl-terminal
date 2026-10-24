@@ -8,6 +8,7 @@
 #include "sduser.h"
 #include "music.h"
 #include "xiaozhi_ai.h"
+#include "xiaozhi.h"
 
 static const uint16_t screenWidth  = 320;
 static const uint16_t screenHeight = 240;
@@ -87,6 +88,7 @@ void WiFi_task(void *pt);
 void data_task(void *pt);
 void serial_task(void *pt);
 void music_task(void *pt);
+void xiaozhi_task(void *pt);
 
 void setup()
 {
@@ -103,6 +105,7 @@ void setup()
     xTaskCreatePinnedToCore(data_task, "data_task", 1024*8, NULL, 1, NULL, 0);
     xTaskCreatePinnedToCore(serial_task, "serial_task", 1024*8, NULL, 1, NULL, 0);
     xTaskCreatePinnedToCore(music_task, "music_task", 1024*5, NULL, 1, NULL, 0);
+    xTaskCreatePinnedToCore(xiaozhi_task, "xiaozhi_task", 1024*5, NULL, 1, NULL, 0);
 }
 
 void loop()
@@ -151,10 +154,19 @@ void serial_task(void *pt)
 }
 
 void music_task(void *pt)
+{
+    while(1)
     {
-        while(1)
-        {
-            music_update();
-            vTaskDelay(5);
-        }
+        music_update();
+        vTaskDelay(5);
     }
+}
+
+void xiaozhi_task(void *pt)
+{
+    while(1)
+    {
+        xiaozhi_update();
+        vTaskDelay(5);
+    }
+}

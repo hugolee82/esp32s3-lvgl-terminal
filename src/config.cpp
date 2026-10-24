@@ -36,5 +36,6 @@ cfg_xiaozhi Xiaozhi = {
     .question_text = "",
     .answer_text = "",
     .answer_url = "",
-    .answer_flag = false
+    .answer_flag = false,
+    .ask_flag = false
 };

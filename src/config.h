@@ -33,6 +33,7 @@ typedef struct {
     String answer_text;
     String answer_url;
     bool answer_flag;
+    bool ask_flag;
 }cfg_xiaozhi;
 
 typedef struct {

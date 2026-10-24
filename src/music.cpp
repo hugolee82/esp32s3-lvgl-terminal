@@ -3,7 +3,7 @@
 #include <driver/i2s.h>
 #include <Audio.h>
 
-#define I2S_DOUT       39
+#define I2S_DOUT      39
 #define I2S_BCLK      40
 #define I2S_LRC       41
 
@@ -32,7 +32,11 @@ void music_read()
             const char *mp3_ext = ".mp3";
             if ((filename[0] != '.') && (strcmp(mp3_ext, &filename[len - 4]) == 0))
             {
-                if(cnt == 1)strcpy(Music.song_name, filename);
+                if(cnt == 1)
+                {
+                    memset(Music.song_name, 0, sizeof(Music.song_name));
+                    strcpy(Music.song_name, filename);
+                }
                 Music.song_list += filename; 
                 Music.song_list += "\n";
             }
@@ -48,30 +52,42 @@ void music_update()
     audio.setVolume(Music.volume_value); 
     if(Music.play_flag == 1)
     {
-        // 切歌
-        if(!audio.isRunning() && Music.start_flag == 0)
-        {
-            Music.start_flag = 1; 
-        }
-        if(Music.start_flag)
-        {
-            audio.connecttoFS(SD, Music.song_name);
-            Music.start_flag = 0;
-        }
         // 暂停->播放
         if(Music.pause_flag && !audio.isRunning())
         {
             audio.pauseResume();
             Music.pause_flag = 0;
         }
+        // 切歌
+        if(Music.start_flag)
+        {
+            if(Xiaozhi.answer_flag == 1)
+            {
+                audio.connecttohost(Xiaozhi.answer_url.c_str());
+                Music.play_flag = 0;
+            }
+            else 
+            {
+                audio.connecttoFS(SD, Music.song_name);
+            }
+            Music.start_flag = 0;
+        }
+        if(!audio.isRunning() && Music.start_flag == 0)
+        {
+			Music.start_flag = 1; 
+        }
     }
     else 
     {
-        if(!Music.pause_flag && audio.isRunning())
+        // 播放->暂停
+        if(!Music.pause_flag && audio.isRunning() && Xiaozhi.answer_flag == 0)
         {
             audio.pauseResume();
             Music.pause_flag = 1;
-            
+        }
+        else if(!audio.isRunning() && Xiaozhi.answer_flag == 1)
+        {
+            Xiaozhi.answer_flag = 0;
         }
     }
 }
