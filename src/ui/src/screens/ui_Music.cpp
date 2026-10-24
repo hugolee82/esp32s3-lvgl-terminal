@@ -6,6 +6,8 @@
 #include "../ui.h"
 #include "config.h"
 
+LV_FONT_DECLARE(ui_font_SongList16);
+
 void ui_Music_screen_init(void)
 {
     ui_Music = lv_obj_create(NULL);
@@ -21,8 +23,10 @@ void ui_Music_screen_init(void)
     lv_obj_set_align(ui_ImgButton5, LV_ALIGN_CENTER);
 
     ui_Roller1 = lv_roller_create(ui_Music);
-    if(Music.song_options)lv_roller_set_options(ui_Roller1, Music.song_options, LV_ROLLER_MODE_NORMAL);
+    if(Music.song_options && Music.song_options[0])lv_roller_set_options(ui_Roller1, Music.song_options, LV_ROLLER_MODE_NORMAL);
     else lv_roller_set_options(ui_Roller1, "未识别到SD卡内的音乐\n", LV_ROLLER_MODE_NORMAL);
+    lv_obj_set_style_text_font(ui_Roller1, &ui_font_SongList16, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Roller1, &ui_font_SongList16, LV_PART_SELECTED | LV_STATE_DEFAULT);
     lv_obj_set_width(ui_Roller1, 273);
     lv_obj_set_height(ui_Roller1, 197);
     lv_obj_set_x(ui_Roller1, 18);

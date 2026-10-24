@@ -92,9 +92,9 @@ void setup()
 {
     lvgl_setup();
 
-    ui_init();
     SD_init();
     music_init();
+    ui_init();
     WiFi_init();
     xiaozhi_init();
 
