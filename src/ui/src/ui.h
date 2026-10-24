@@ -157,6 +157,15 @@ void ui_Aidoubao_screen_init(void);
 extern lv_obj_t * ui_Aidoubao;
 void ui_event_ImgButton6(lv_event_t * e);
 extern lv_obj_t * ui_ImgButton6;
+extern lv_obj_t * ui_TextAreaQuestion;
+extern lv_obj_t * ui_TextAreaAnswer;
+extern lv_obj_t * ui_ButtonAnswer;
+extern lv_obj_t * ui_ButtonQuestion;
+extern lv_obj_t * ui_LabelAnswer;
+extern lv_obj_t * ui_LabelQuestion;
+void ui_event_SwitchSpeak(lv_event_t * e);
+extern lv_obj_t * ui_SwitchSpeak;
+extern lv_obj_t * ui_LabelSpeak;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Steam

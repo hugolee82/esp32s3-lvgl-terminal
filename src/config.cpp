@@ -31,3 +31,10 @@ cfg_music Music = {
     .pause_flag = false,
     .volume_value = 16
 };
+
+cfg_xiaozhi Xiaozhi = {
+    .question_text = "",
+    .answer_text = "",
+    .answer_url = "",
+    .answer_flag = false
+};

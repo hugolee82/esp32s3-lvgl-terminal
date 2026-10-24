@@ -147,6 +147,15 @@ void ui_Aidoubao_screen_init(void);
 lv_obj_t * ui_Aidoubao;
 void ui_event_ImgButton6(lv_event_t * e);
 lv_obj_t * ui_ImgButton6;
+lv_obj_t * ui_TextAreaQuestion;
+lv_obj_t * ui_TextAreaAnswer;
+lv_obj_t * ui_ButtonAnswer;
+lv_obj_t * ui_ButtonQuestion;
+lv_obj_t * ui_LabelAnswer;
+lv_obj_t * ui_LabelQuestion;
+void ui_event_SwitchSpeak(lv_event_t * e);
+lv_obj_t * ui_SwitchSpeak;
+lv_obj_t * ui_LabelSpeak;
 // CUSTOM VARIABLES
 
 
@@ -448,7 +457,7 @@ void ui_event_StartMusic(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-    if(lv_obj_has_state(target, LV_STATE_CHECKED))Music.play_flag = 1;
+    if(lv_obj_has_state(ui_StartMusic, LV_STATE_CHECKED))Music.play_flag = 1;
     else Music.play_flag = 0;
     }
 }
@@ -480,6 +489,16 @@ void ui_event_ImgButton6(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+    }
+}
+
+void ui_event_SwitchSpeak(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_checked_set_text_value(ui_LabelSpeak, target, "ON", "OFF");
     }
 }
 

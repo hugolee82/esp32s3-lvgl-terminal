@@ -48,13 +48,6 @@ void music_update()
     audio.setVolume(Music.volume_value); 
     if(Music.play_flag == 1)
     {
-        // 暂停->播放
-        if(Music.pause_flag && !audio.isRunning())
-        {
-            audio.pauseResume();
-            Music.pause_flag = 0;
-        
-        }
         // 切歌
         if(!audio.isRunning() && Music.start_flag == 0)
         {
@@ -65,19 +58,20 @@ void music_update()
             audio.connecttoFS(SD, Music.song_name);
             Music.start_flag = 0;
         }
-        
-        if(!audio.isRunning() && Music.start_flag == 0)
+        // 暂停->播放
+        if(Music.pause_flag && !audio.isRunning())
         {
-			Music.start_flag = 1; 
+            audio.pauseResume();
+            Music.pause_flag = 0;
         }
-    } 
+    }
     else 
     {
-        // 播放->暂停
         if(!Music.pause_flag && audio.isRunning())
         {
-        audio.pauseResume();
-        Music.pause_flag = 1;
+            audio.pauseResume();
+            Music.pause_flag = 1;
+            
         }
     }
 }

@@ -29,6 +29,13 @@ typedef struct {
 }cfg_serial;
 
 typedef struct {
+    String question_text;
+    String answer_text;
+    String answer_url;
+    bool answer_flag;
+}cfg_xiaozhi;
+
+typedef struct {
     char song_name[64];
     String song_list;
     const char* song_options;
@@ -42,5 +49,6 @@ extern cfg_set Set;
 extern cfg_data Data;
 extern cfg_serial Uart;
 extern cfg_music Music;
+extern cfg_xiaozhi Xiaozhi;
 
 #endif

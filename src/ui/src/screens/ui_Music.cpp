@@ -64,7 +64,8 @@ void ui_Music_screen_init(void)
     lv_obj_set_align(ui_ChangeMusic, LV_ALIGN_CENTER);
 
     ui_SliderVoice = lv_slider_create(ui_Music);
-    lv_slider_set_value(ui_SliderVoice, 0, LV_ANIM_OFF);
+    lv_slider_set_range(ui_SliderVoice, 0, 21);
+    lv_slider_set_value(ui_SliderVoice, 16, LV_ANIM_OFF);
     if(lv_slider_get_mode(ui_SliderVoice) == LV_SLIDER_MODE_RANGE) lv_slider_set_left_value(ui_SliderVoice, 0, LV_ANIM_OFF);
     lv_obj_set_width(ui_SliderVoice, 25);
     lv_obj_set_height(ui_SliderVoice, 118);

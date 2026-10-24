@@ -250,10 +250,10 @@ void ui_Main_screen_init(void)
     lv_obj_set_style_text_font(ui_LabelAbout, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PanelT = lv_obj_create(ui_Main);
-    lv_obj_set_width(ui_PanelT, 148);
-    lv_obj_set_height(ui_PanelT, 72);
-    lv_obj_set_x(ui_PanelT, -54);
-    lv_obj_set_y(ui_PanelT, -52);
+    lv_obj_set_width(ui_PanelT, 252);
+    lv_obj_set_height(ui_PanelT, 92);
+    lv_obj_set_x(ui_PanelT, -2);
+    lv_obj_set_y(ui_PanelT, -60);
     lv_obj_set_align(ui_PanelT, LV_ALIGN_CENTER);
     lv_obj_clear_flag(ui_PanelT, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_border_color(ui_PanelT, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
