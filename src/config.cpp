@@ -6,7 +6,7 @@ cfg_set Set = {
     .WiFi_scan_all = "",
     .WiFi_button_flag = true,
     .WiFi_name = {'\0'},
-    .WiFi_password = "" ,
+    .WiFi_password = {'\0'},
     .WiFi_connect_status = false,
     .WiFi_connect_flag = false,
     .WiFi_connect_timeout = 10 * 5
@@ -18,8 +18,8 @@ cfg_data Data = {
 };
 
 cfg_serial Uart = {
-    .tx_data = "",
-    .rx_data = ""
+    .tx_data = String(),
+    .rx_data = String()
 };
 
 cfg_music Music = {

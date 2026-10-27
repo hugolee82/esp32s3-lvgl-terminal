@@ -20,8 +20,8 @@ void ui_Time_screen_init(void)
     lv_obj_set_align(ui_ImgButton8, LV_ALIGN_CENTER);
 
     ui_Calendar1 = lv_calendar_create(ui_Time);
-    lv_calendar_set_today_date(ui_Calendar1, 2026, 20, 11);
-    lv_calendar_set_showed_date(ui_Calendar1, 2026, 20);
+    lv_calendar_set_today_date(ui_Calendar1, 2026, 1, 1);
+    lv_calendar_set_showed_date(ui_Calendar1, 2026, 1);
     lv_obj_t * ui_Calendar1_header = lv_calendar_header_arrow_create(ui_Calendar1);
     lv_obj_set_width(ui_Calendar1, 315);
     lv_obj_set_height(ui_Calendar1, 186);

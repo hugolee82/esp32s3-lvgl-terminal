@@ -3,11 +3,12 @@
 #include "ui/src/ui.h"
 #include <WiFi.h>
 #include "data.h"
+#include "task.h"
 
-// 连上之后的一次性初始化(参考项目里这段在 WiFi_connect/WiFi_init 末尾)
+// 连上之后的一次性初始化
 // 漏了它的后果:Data.time_flag 永远是 false → data_update() 整个 if 不成立
 // → 时钟不走、天气也不会去请求
-static void WiFi_on_connected()
+void WiFi_on_connected()
 {
     if(!Data.time_flag)
     {
@@ -18,7 +19,10 @@ static void WiFi_on_connected()
 }
 
 void WiFi_update()
-{    
+{
+    static String last_scan;    // 上次真正写进 roller 的列表内容
+    static String last_state;   // 上次写进状态 label 的文字
+
     if(Set.WiFi_connect_flag)
     {
         WiFi_connect();
@@ -26,39 +30,53 @@ void WiFi_update()
     }
     else
     {
-        // 修复加载的组件在连接完成后会残留文件问题
+        // 修复加载的组件在连接完成后会残留文件问题。
+        // 只在"刚隐藏"的那一次重绘一次;原来每 250ms 无条件 invalidate 父对象,
+        // 等于把整个设置页反复全屏重绘,既费 CPU 又占 SPI。
         if(!lv_obj_has_flag(ui_SpinnerWiFi, LV_OBJ_FLAG_HIDDEN))
         {
+            LVGL_LOCK();
             lv_obj_add_flag(ui_SpinnerWiFi, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_invalidate(ui_SpinnerWiFi);
+            lv_obj_invalidate(lv_obj_get_parent(ui_SpinnerWiFi));
+            LVGL_UNLOCK();
         }
-        lv_obj_invalidate(ui_SpinnerWiFi);
-        lv_obj_invalidate(lv_obj_get_parent(ui_SpinnerWiFi));
         vTaskDelay(200 / portTICK_PERIOD_MS);
     }
 
-    // 把连接状态回写界面(参考项目有这段,之前漏移植了)
-    // 少了它 ui_LabelWiFIstate 初始化成"未连接"后就再没人改过,连上了也看不出来
+    // 状态一律以 WiFi.status() 为准。
+    // 原来的写法用了只升不降的 Set.WiFi_connect_status,路由器掉线后
+    // 界面还一直显示"已连接",顺带导致 WiFi_scan() 里的自动重连也不触发。
     // 注意:不要在这里动 ui_ImgButtonWiFi 的 CHECKED 状态,
     // 它的选中态是跟面板显隐绑定的,由 ui_event_ImgButtonWiFi 自己管
-    if(Set.WiFi_connect_status || WiFi.status() == WL_CONNECTED)
+    Set.WiFi_connect_status = (WiFi.status() == WL_CONNECTED);
+    String state = Set.WiFi_connect_status ? ("已连接 " + WiFi.SSID()) : String("未连接");
+    if(state != last_state)   // 内容没变就别重设 label,避免字符串堆分配 + 重绘
     {
-        Set.WiFi_connect_status = 1;
-        lv_label_set_text_fmt(ui_LabelWiFIstate, "已连接 %s", WiFi.SSID().c_str());
-    }
-    else
-    {
-        lv_label_set_text(ui_LabelWiFIstate, "未连接");
+        last_state = state;
+        LVGL_LOCK();
+        lv_label_set_text(ui_LabelWiFIstate, state.c_str());
+        LVGL_UNLOCK();
     }
 
     if(Set.WiFi_button_flag == 1)
     {
+        LVGL_LOCK();
         lv_roller_set_options(ui_RollerWiFi, "正在扫描附近WiFi...\n", LV_ROLLER_MODE_NORMAL);
+        LVGL_UNLOCK();
+        last_scan = "正在扫描附近WiFi...\n";
         WiFi_scan();
         Set.WiFi_button_flag = 0;
     }
-    else
+    else if(Set.WiFi_scan_all != last_scan)
     {
+        // 只在列表内容真的变了才重设。
+        // 原来每 50ms 调一次 lv_roller_set_options,它会把 roller 的选中项/滚动位置
+        // 一遍遍重置回第 0 项,看起来就是"roller 自己在反复滑动"。
+        last_scan = Set.WiFi_scan_all;
+        LVGL_LOCK();
         lv_roller_set_options(ui_RollerWiFi, Set.WiFi_scan_all.c_str(), LV_ROLLER_MODE_NORMAL);
+        LVGL_UNLOCK();
     }
 }
 
@@ -83,7 +101,8 @@ void WiFi_scan()
         strncpy(Set.WiFi_name, WiFi.SSID(0).c_str(), sizeof(Set.WiFi_name) - 1);
         Set.WiFi_name[sizeof(Set.WiFi_name) - 1] = '\0';
     }
-    if(!Set.WiFi_connect_status)WiFi_init();
+    // 用真实连接状态判断,重连本身不阻塞(见 WiFi_init)
+    if(WiFi.status() != WL_CONNECTED) WiFi_init();
 }
 
 void WiFi_connect()
@@ -121,18 +140,10 @@ void WiFi_connect()
 void WiFi_init()
 {
     WiFi.mode(WIFI_STA);
-    WiFi.begin();   // 不带参数:用上次存进 NVS 的 SSID/密码重连
-    for(int i = 0; i < Set.WiFi_connect_timeout; ++i)
-    {
-        uint32_t connect_status = WiFi.status();
-        if(connect_status == WL_CONNECTED)
-        {
-        	Set.WiFi_connect_status = 1;
-        	Serial.printf("[WiFi] 用已保存的凭证连上了 %s\n", WiFi.SSID().c_str());
-        	break;
-        }
-        else Set.WiFi_connect_status = 0;
-        vTaskDelay(100 / portTICK_PERIOD_MS);
-    }
+    // 不带参数:用上次存进 NVS 的 SSID/密码重连。
+    // 这里不再忙等(原来最多阻塞 5 秒):连接结果由 data_task 的兜底逻辑
+    // 或 WiFi_update() 轮询发现,UI 不会因为等 WiFi 而卡住。
+    WiFi.begin();
+    Set.WiFi_connect_status = (WiFi.status() == WL_CONNECTED);
     if(Set.WiFi_connect_status) WiFi_on_connected();
 }

@@ -1,5 +1,5 @@
-#ifndef _SDUSER_H
-#define _SDUSER_H
+#ifndef SDUSER_H
+#define SDUSER_H
 
 #include "config.h"
 

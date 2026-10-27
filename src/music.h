@@ -1,5 +1,5 @@
-#ifndef _MUSIC_H
-#define _MUSIC_H
+#ifndef MUSIC_H
+#define MUSIC_H
 
 void music_init();
 void music_read();

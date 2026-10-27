@@ -63,14 +63,14 @@ void ui_Main_screen_init(void)
     lv_obj_set_style_border_color(ui_PanelSerial, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_opa(ui_PanelSerial, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_ToSet2 = lv_imgbtn_create(ui_PanelSerial);
-    lv_imgbtn_set_src(ui_ToSet2, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_usbrelease_png, NULL);
-    lv_imgbtn_set_src(ui_ToSet2, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_usbpush_png, NULL);
-    lv_obj_set_width(ui_ToSet2, 48);
-    lv_obj_set_height(ui_ToSet2, 48);
-    lv_obj_set_x(ui_ToSet2, 0);
-    lv_obj_set_y(ui_ToSet2, -10);
-    lv_obj_set_align(ui_ToSet2, LV_ALIGN_CENTER);
+    ui_ToSerial = lv_imgbtn_create(ui_PanelSerial);
+    lv_imgbtn_set_src(ui_ToSerial, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_usbrelease_png, NULL);
+    lv_imgbtn_set_src(ui_ToSerial, LV_IMGBTN_STATE_PRESSED, NULL, &ui_img_usbpush_png, NULL);
+    lv_obj_set_width(ui_ToSerial, 48);
+    lv_obj_set_height(ui_ToSerial, 48);
+    lv_obj_set_x(ui_ToSerial, 0);
+    lv_obj_set_y(ui_ToSerial, -10);
+    lv_obj_set_align(ui_ToSerial, LV_ALIGN_CENTER);
 
     ui_LabelSerial = lv_label_create(ui_PanelSerial);
     lv_obj_set_width(ui_LabelSerial, LV_SIZE_CONTENT);   /// 1
@@ -282,7 +282,7 @@ void ui_Main_screen_init(void)
     lv_obj_set_style_text_font(ui_Label4, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_ToSet, ui_event_ToSet, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_ToSet2, ui_event_ToSet2, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ToSerial, ui_event_ToSerial, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ToWeather, ui_event_ToWeather, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ToMusic, ui_event_ToMusic, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ToAI, ui_event_ToAI, LV_EVENT_ALL, NULL);

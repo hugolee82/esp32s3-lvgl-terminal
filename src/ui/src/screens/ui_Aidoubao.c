@@ -19,6 +19,89 @@ void ui_Aidoubao_screen_init(void)
     lv_obj_set_y(ui_ImgButton6, -94);
     lv_obj_set_align(ui_ImgButton6, LV_ALIGN_CENTER);
 
+    ui_TextAreaQuestion = lv_textarea_create(ui_Aidoubao);
+    lv_obj_set_width(ui_TextAreaQuestion, 210);
+    lv_obj_set_height(ui_TextAreaQuestion, 77);
+    lv_obj_set_x(ui_TextAreaQuestion, 3);
+    lv_obj_set_y(ui_TextAreaQuestion, -52);
+    lv_obj_set_align(ui_TextAreaQuestion, LV_ALIGN_CENTER);
+    lv_textarea_set_text(ui_TextAreaQuestion, "你好，小智！");
+    lv_obj_set_style_text_font(ui_TextAreaQuestion, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_TextAreaQuestion, lv_color_hex(0xFF0C9C), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_TextAreaQuestion, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+
+    ui_TextAreaAnswer = lv_textarea_create(ui_Aidoubao);
+    lv_obj_set_width(ui_TextAreaAnswer, 258);
+    lv_obj_set_height(ui_TextAreaAnswer, 95);
+    lv_obj_set_x(ui_TextAreaAnswer, 25);
+    lv_obj_set_y(ui_TextAreaAnswer, 41);
+    lv_obj_set_align(ui_TextAreaAnswer, LV_ALIGN_CENTER);
+    lv_textarea_set_text(ui_TextAreaAnswer, "你好啊！我是小智，有什么可以帮到你？");
+    lv_obj_set_style_text_font(ui_TextAreaAnswer, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_TextAreaAnswer, lv_color_hex(0x2095F6), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_TextAreaAnswer, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+
+    ui_ButtonAnswer = lv_btn_create(ui_Aidoubao);
+    lv_obj_set_width(ui_ButtonAnswer, 30);
+    lv_obj_set_height(ui_ButtonAnswer, 30);
+    lv_obj_set_x(ui_ButtonAnswer, -127);
+    lv_obj_set_y(ui_ButtonAnswer, 12);
+    lv_obj_set_align(ui_ButtonAnswer, LV_ALIGN_CENTER);
+    lv_obj_set_style_radius(ui_ButtonAnswer, 30, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_ButtonQuestion = lv_btn_create(ui_Aidoubao);
+    lv_obj_set_width(ui_ButtonQuestion, 30);
+    lv_obj_set_height(ui_ButtonQuestion, 30);
+    lv_obj_set_x(ui_ButtonQuestion, 134);
+    lv_obj_set_y(ui_ButtonQuestion, -71);
+    lv_obj_set_align(ui_ButtonQuestion, LV_ALIGN_CENTER);
+    lv_obj_set_style_radius(ui_ButtonQuestion, 30, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_ButtonQuestion, lv_color_hex(0xFF0F9E), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_ButtonQuestion, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LabelAnswer = lv_label_create(ui_Aidoubao);
+    lv_obj_set_width(ui_LabelAnswer, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LabelAnswer, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelAnswer, -127);
+    lv_obj_set_y(ui_LabelAnswer, 12);
+    lv_obj_set_align(ui_LabelAnswer, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelAnswer, "^^");
+    lv_obj_set_style_text_font(ui_LabelAnswer, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LabelQuestion = lv_label_create(ui_Aidoubao);
+    lv_obj_set_width(ui_LabelQuestion, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LabelQuestion, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelQuestion, 134);
+    lv_obj_set_y(ui_LabelQuestion, -71);
+    lv_obj_set_align(ui_LabelQuestion, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelQuestion, "^^");
+    lv_obj_set_style_text_font(ui_LabelQuestion, &ui_font_AlimamaDakaiFontsize16Bpp8, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_SwitchSpeak = lv_switch_create(ui_Aidoubao);
+    lv_obj_set_width(ui_SwitchSpeak, 35);
+    lv_obj_set_height(ui_SwitchSpeak, 35);
+    lv_obj_set_x(ui_SwitchSpeak, -128);
+    lv_obj_set_y(ui_SwitchSpeak, -48);
+    lv_obj_set_align(ui_SwitchSpeak, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_SwitchSpeak, lv_color_hex(0x4B4A52), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_SwitchSpeak, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_bg_color(ui_SwitchSpeak, lv_color_hex(0x999999), LV_PART_KNOB | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_SwitchSpeak, 255, LV_PART_KNOB | LV_STATE_DEFAULT);
+
+    ui_LabelSpeak = lv_label_create(ui_SwitchSpeak);
+    lv_obj_set_width(ui_LabelSpeak, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LabelSpeak, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LabelSpeak, 1);
+    lv_obj_set_y(ui_LabelSpeak, 0);
+    lv_obj_set_align(ui_LabelSpeak, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelSpeak, "OFF");
+
     lv_obj_add_event_cb(ui_ImgButton6, ui_event_ImgButton6, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_SwitchSpeak, ui_event_SwitchSpeak, LV_EVENT_ALL, NULL);
 
 }

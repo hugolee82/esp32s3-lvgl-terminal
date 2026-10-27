@@ -6,6 +6,7 @@
 #include "ui.h"
 #include "ui_helpers.h"
 #include "config.h"
+#include "task.h"
 
 ///////////////////// VARIABLES ////////////////////
 
@@ -21,8 +22,8 @@ void ui_event_ToSet(lv_event_t * e);
 lv_obj_t * ui_ToSet;
 lv_obj_t * ui_LabelSet;
 lv_obj_t * ui_PanelSerial;
-void ui_event_ToSet2(lv_event_t * e);
-lv_obj_t * ui_ToSet2;
+void ui_event_ToSerial(lv_event_t * e);
+lv_obj_t * ui_ToSerial;
 lv_obj_t * ui_LabelSerial;
 lv_obj_t * ui_PanelWeather;
 void ui_event_ToWeather(lv_event_t * e);
@@ -228,7 +229,9 @@ void ui_event_Main(lv_event_t * e)
 
     if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_Set, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 200, 0, &ui_Set_screen_init);
+        _ui_screen_change(&ui_Set, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0, &ui_Set_screen_init);
+        // 和按钮入口保持一致,否则下滑进设置时 WiFi 不扫描、状态也不更新
+        WiFiTask_create();
     }
 }
 
@@ -237,16 +240,18 @@ void ui_event_ToSet(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Set, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 200, 0, &ui_Set_screen_init);
+        _ui_screen_change(&ui_Set, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0, &ui_Set_screen_init);
+        WiFiTask_create();
     }
 }
 
-void ui_event_ToSet2(lv_event_t * e)
+void ui_event_ToSerial(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Serial, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Serial_screen_init);
+        _ui_screen_change(&ui_Serial, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Serial_screen_init);
+        serialTask_create();
     }
 }
 
@@ -255,7 +260,7 @@ void ui_event_ToWeather(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Weather, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Weather_screen_init);
+        _ui_screen_change(&ui_Weather, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Weather_screen_init);
     }
 }
 
@@ -264,7 +269,7 @@ void ui_event_ToMusic(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Music, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Music_screen_init);
+        _ui_screen_change(&ui_Music, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Music_screen_init);
     }
 }
 
@@ -273,7 +278,8 @@ void ui_event_ToAI(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Aidoubao, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Aidoubao_screen_init);
+        _ui_screen_change(&ui_Aidoubao, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Aidoubao_screen_init);
+        xiaozhiTask_create();
     }
 }
 
@@ -282,7 +288,7 @@ void ui_event_ToGame(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Steam, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Steam_screen_init);
+        _ui_screen_change(&ui_Steam, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Steam_screen_init);
     }
 }
 
@@ -291,7 +297,7 @@ void ui_event_ToTime(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Time, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Time_screen_init);
+        _ui_screen_change(&ui_Time, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Time_screen_init);
     }
 }
 
@@ -300,7 +306,7 @@ void ui_event_ToAbout(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_About, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_About_screen_init);
+        _ui_screen_change(&ui_About, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_About_screen_init);
     }
 }
 
@@ -310,7 +316,7 @@ void ui_event_Set(lv_event_t * e)
 
     if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_MOVE_TOP, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_MOVE_TOP, 100, 0, &ui_Main_screen_init);
     }
 }
 
@@ -319,7 +325,9 @@ void ui_event_ImgButton3(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_MOVE_TOP, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_MOVE_TOP, 100, 0, &ui_Main_screen_init);
+        _ui_screen_delete(&ui_Set);
+        WiFiTask_delete();
     }
 }
 
@@ -331,7 +339,8 @@ void ui_event_SliderLight(lv_event_t * e)
     if(event_code == LV_EVENT_VALUE_CHANGED) {
         _ui_slider_set_text_value(ui_LabelLightValue, target, "", "%");
         Set.screen_light = lv_slider_get_value(target);
-        if(Set.screen_light > 0)analogWrite(16, Set.screen_light * 255/100);
+        // 拖到 0 也要写,否则关不掉背光
+        analogWrite(16, Set.screen_light * 255 / 100);
     }
 }
 
@@ -370,7 +379,10 @@ void ui_event_Keyboard1(lv_event_t * e)
     if(event_code == LV_EVENT_READY) {
         _ui_flag_modify(ui_PanelConnect, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
         _ui_flag_modify(ui_SpinnerWiFi, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
-        Set.WiFi_password = lv_textarea_get_text(ui_Password);
+        // 拷一份到自己的缓冲:lv_textarea_get_text() 返回的是 textarea 内部指针,
+        // textarea 内容一变(WiFi_task 那边还在用它连网)就可能失效
+        strncpy(Set.WiFi_password, lv_textarea_get_text(ui_Password), sizeof(Set.WiFi_password) - 1);
+        Set.WiFi_password[sizeof(Set.WiFi_password) - 1] = '\0';
         Set.WiFi_connect_flag = 1;
     }
 }
@@ -398,7 +410,9 @@ void ui_event_ImgButton2(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
+        _ui_screen_delete(&ui_Serial);
+        serialTask_delete();
     }
 }
 
@@ -438,7 +452,7 @@ void ui_event_ImgButton4(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
     }
 }
 
@@ -447,7 +461,7 @@ void ui_event_ImgButton5(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
     }
 }
 
@@ -488,7 +502,10 @@ void ui_event_ImgButton6(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
+        _ui_screen_delete(&ui_Aidoubao);
+        
+        xiaozhiTask_delete();
     }
 }
 
@@ -509,7 +526,7 @@ void ui_event_ImgButton7(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
     }
 }
 
@@ -606,7 +623,7 @@ void ui_event_ImgButton8(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
     }
 }
 
@@ -615,7 +632,7 @@ void ui_event_ImgButton9(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Main_screen_init);
+        _ui_screen_change(&ui_Main, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Main_screen_init);
     }
 }
 
@@ -624,7 +641,7 @@ void ui_event_ImgButtonbacktogame(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Steam, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Steam_screen_init);
+        _ui_screen_change(&ui_Steam, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Steam_screen_init);
         _ui_screen_delete(&ui_Gameson);
     }
 }

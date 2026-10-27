@@ -12,7 +12,7 @@ typedef struct {
     String WiFi_scan_all;
     bool WiFi_button_flag;
     char WiFi_name[64];
-    const char *WiFi_password;
+    char WiFi_password[64];       // 自己拷一份,别直接指向 LVGL textarea 的内部缓冲
     bool WiFi_connect_status;
     bool WiFi_connect_flag;
     int WiFi_connect_timeout;
@@ -24,8 +24,8 @@ typedef struct {
 }cfg_data;
 
 typedef struct {
-    const char* tx_data;
-    const char* rx_data;
+    String tx_data;               // 用 String 存,避免指向临时变量/textarea 缓冲
+    String rx_data;
 }cfg_serial;
 
 typedef struct {
@@ -37,7 +37,7 @@ typedef struct {
 }cfg_xiaozhi;
 
 typedef struct {
-    char song_name[64];
+    char song_name[128];          // 63 字节会切断长中文文件名(UTF-8 每字 3 字节)
     String song_list;
     const char* song_options;
     bool play_flag;
